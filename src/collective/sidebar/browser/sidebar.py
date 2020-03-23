@@ -108,10 +108,19 @@ class SidebarViewlet(ViewletBase):
         """
         Check if the user can modify content.
         """
-        permission = 'cmf.ModifyPortalContent'
-        if api.user.has_permission(permission, obj=self.context):
-            return True
-        return False
+        #permission = 'cmf.ModifyPortalContent'
+        #if api.user.has_permission(permission, obj=self.context):
+        #    return True
+        #return False
+
+        if not api.user.is_anonymous():
+            authuser = api.user.get_current()
+            userroles = api.user.get_roles(user=authuser, obj=self.context, inherit=True)
+            editorroles = ['Owner', 'Manager', 'Editor', 'Site Administrator']
+            matches = [x for x in editorroles if x in userroles]
+            if matches:
+                return True
+        return False    
 
     def can_manage_portal(self):
         """
@@ -480,6 +489,27 @@ class SidebarViewlet(ViewletBase):
     def icon(self, idx):
         return get_icon(idx)
 
+    def get_homefolder(self):
+        portal = api.portal.get()
+        pm = api.portal.get_tool(name='portal_membership')
+        homeurl = pm.getHomeUrl()
+        return homeurl
+
+    def is_homearea(self):
+        current_user = api.user.get_current()
+        homeurl = self.get_homefolder()
+        current_roles = api.user.get_roles(user=current_user, obj=self.context, inherit=True)
+        if len(current_roles) == 3 and "Owner" in current_roles:
+            if homeurl in self.context.absolute_url():
+                return True
+        return False    
+
+    def deeper_then_home(self):
+        homeurl = self.get_homefolder()
+        if homeurl in self.context.absolute_url():
+            if homeurl == self.context.absolute_url():
+                return False
+        return True    
 
 def get_action_icon(action_id):
     """

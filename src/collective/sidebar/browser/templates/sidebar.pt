@@ -26,18 +26,29 @@
                          portrait data/portrait;
                          user_url data/user_url">
 
-          <a href="${user_url}">
-
-            <div class="profile-image" style="background-image: url('${portrait}');"></div>
-
-            <div class="profile-info">
-              <div class="profile-name" tal:content="python:user_info['fullname'] or user_info['username']"></div>
-            </div>
-
-          </a>
+        <a tal:attributes="href view/get_homefolder">		
+	  <div class="profile-info mb-5">
+	    <div class="profile-name mb-3"><span class="menu-item-icon fal fa-user"></span> 
+		                    <span  tal:content="python:user_info['fullname'] or user_info['username']"/></div>
+	    <button type="button" class="btn btn-success"><span class="menu-item-icon fal fa-folder"></span>Mein Ordner</button>
+	  </div>
+        </a>
 
         </div>
       </div>
+
+
+      <!-- Registrieren / Anmelden -->
+
+      <div id="sidebar-section-register" tal:condition="view/is_anonymous" class="mb-5">
+          <a role="button" tal:attributes="href string:${view/get_portal_url}/register" class="btn btn-warning">
+		  <span class="menu-item-icon fal fa-star"></span> hier registrieren
+	  </a>
+          <a role="button" tal:attributes="href string:${view/get_portal_url}/login" class="btn btn-outline-success">
+		  <span class="menu-item-icon fal fa-sign-in-alt"></span> jetzt anmelden
+	  </a>
+      </div>	  
+
 
       <!-- Main Menu -->
 
@@ -136,7 +147,7 @@
             <span class="menu-item-icon ${python:view.icon('edit')}"></span> <span class="menu-item-title" i18n:translate="edit">Edit</span>
           </a>
 
-          <a href="#" tal:attributes="href python:view.get_folder_contents_url()">
+          <a href="#" tal:attributes="href python:view.get_folder_contents_url()" tal:condition="not:view/is_homearea">
             <span class="menu-item-icon ${python:view.icon('folder-open')}"></span> <span class="menu-item-title" i18n:translate="contents">Contents</span>
           </a>
 
@@ -161,7 +172,7 @@
                        color_state view/has_workflow_state_color;
                        actions view/get_workflow_actions"
            id="sidebar-section-workflow" class="${python:view.get_section_state('sidebar-section-workflow')}"
-           tal:condition="python:view.can_edit() and view.has_workflow()">
+           tal:condition="python:view.can_edit() and view.has_workflow() and not view.is_homearea()">
 
         <div class="menu-section-title">
           <span i18n:translate="navigation_heading_workflow">Workflow</span>
@@ -194,7 +205,7 @@
 
       <div tal:define="actions view/get_actions"
            id="sidebar-section-actions" class="${python:view.get_section_state('sidebar-section-actions')}"
-           tal:condition="python:view.is_actions_enabled() and view.can_edit() and view.has_actions()">
+           tal:condition="python:view.is_actions_enabled() and view.can_edit() and view.has_actions() and view.deeper_then_home()">
 
         <div class="menu-section-title">
           <span i18n:translate="navigation_heading_actions">Actions</span>
@@ -247,7 +258,7 @@
 
       <div id="sidebar-section-display"
            class="${python:view.get_section_state('sidebar-section-display')}"
-           tal:condition="view/can_edit">
+           tal:condition="python: view.can_edit() and not view.is_homearea()">
 
         <div class="menu-section-title">
           <span i18n:translate="navigation_heading_display">Display</span>
