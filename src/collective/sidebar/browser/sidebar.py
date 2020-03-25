@@ -513,9 +513,10 @@ class SidebarViewlet(ViewletBase):
 
     def deeper_then_home(self):
         homeurl = self.get_homefolder()
-        if homeurl in self.context.absolute_url():
-            if homeurl == self.context.absolute_url():
-                return False
+        if homeurl:
+            if homeurl in self.context.absolute_url():
+                if homeurl == self.context.absolute_url():
+                    return False
         return True    
 
 def get_action_icon(action_id):
