@@ -182,6 +182,12 @@ class SidebarViewlet(ViewletBase):
         )
         if root_nav:
             context = api.portal.get_navigation_root(context)
+
+        if self.context.portal_type == 'Landingpage':
+            pageid = self.context.id
+            if self.context.aq_parent.default_page == pageid:
+                context = api.portal.get_navigation_root(context)
+
         contents = []
         if IFolderish.providedBy(context):
             contents = context.getFolderContents()
@@ -499,9 +505,10 @@ class SidebarViewlet(ViewletBase):
         current_user = api.user.get_current()
         homeurl = self.get_homefolder()
         current_roles = api.user.get_roles(user=current_user, obj=self.context, inherit=True)
-        if len(current_roles) == 3 and "Owner" in current_roles:
-            if homeurl in self.context.absolute_url():
-                return True
+        if homeurl:
+            if len(current_roles) == 3 and "Owner" in current_roles:
+                if homeurl in self.context.absolute_url():
+                    return True
         return False    
 
     def deeper_then_home(self):
