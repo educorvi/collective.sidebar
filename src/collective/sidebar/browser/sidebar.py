@@ -185,8 +185,9 @@ class SidebarViewlet(ViewletBase):
 
         if self.context.portal_type == 'Landingpage':
             pageid = self.context.id
-            if self.context.aq_parent.default_page == pageid:
-                context = api.portal.get_navigation_root(context)
+            if hasattr(self.context.aq_parent, 'default_page'):
+                if self.context.aq_parent.default_page == pageid:
+                    context = api.portal.get_navigation_root(context)
 
         contents = []
         if IFolderish.providedBy(context):
