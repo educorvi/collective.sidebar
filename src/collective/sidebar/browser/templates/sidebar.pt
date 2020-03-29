@@ -128,7 +128,7 @@
       <!-- Editing -->
 
       <div id="sidebar-section-edit" class="${python:view.get_section_state('sidebar-section-edit')}"
-           tal:condition="view/can_edit">
+           tal:condition="python: view.can_edit() and view.deeper_then_home()">
 
         <div class="menu-section-title">
           <span i18n:translate="navigation_heading_edit">Edit</span>
