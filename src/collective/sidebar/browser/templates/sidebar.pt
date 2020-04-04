@@ -147,16 +147,16 @@
             <span class="menu-item-icon ${python:view.icon('edit')}"></span> <span class="menu-item-title" i18n:translate="edit">Edit</span>
           </a>
 
-          <a href="#" tal:attributes="href python:view.get_folder_contents_url()" tal:condition="not:view/is_homearea">
+          <a href="#" tal:attributes="href python:view.get_folder_contents_url()">
             <span class="menu-item-icon ${python:view.icon('folder-open')}"></span> <span class="menu-item-title" i18n:translate="contents">Contents</span>
           </a>
 
-          <a href="#" tal:attributes="href python:context.absolute_url() + '/@@historyview'">
+          <a href="#" tal:attributes="href python:context.absolute_url() + '/@@historyview'" tal:condition="not:view/is_homearea">
             <span class="menu-item-icon ${python:view.icon('time')}"></span>
             <span class="menu-item-title" tal:content="python:toLocalizedTime(context.ModificationDate(), long_format=1)">Modified</span>
           </a>
 
-          <a href="#" tal:attributes="href python:context.absolute_url() + '/@@sharing'">
+          <a href="#" tal:attributes="href python:context.absolute_url() + '/@@sharing'" tal:condition="not:view/is_homearea">
             <span class="menu-item-icon ${python:view.icon('share')}"></span> <span class="menu-item-title" i18n:translate="sharing">Sharing</span>
           </a>
         </div>
