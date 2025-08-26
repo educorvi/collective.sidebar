@@ -2,8 +2,10 @@ Changelog
 =========
 
 
-2.0.0 (unreleased)
+2.0.1 (2025-08-26)
 ------------------
+
+GIT HEAD 8266cc9 as Release [lwalther]
 
 Added:
 
