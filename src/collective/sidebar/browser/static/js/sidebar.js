@@ -32,7 +32,7 @@
       localStorage.removeItem("coll_" + this.id);
     });
   
-    $(".collapse").each(function () {
+    $("#portal-sidebar .collapse").each(function () {
       if (localStorage.getItem("coll_" + this.id) === "true") {
         $(this).collapse("show");
       } else {
