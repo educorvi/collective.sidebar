@@ -2,7 +2,7 @@
 <registry>
 
   <records interface="Products.CMFPlone.interfaces.IBundleRegistry" prefix="plone.bundles/sidebar">
-    <value key="jscompilation">++resource++collective.sidebar/js/sidebar.js</value>
+    <value key="jscompilation">++resource++collective.sidebar/js/sidebar.min.js</value>
     <value key="csscompilation">++resource++collective.sidebar/css/sidebar.min.css</value>
     <value key="enabled">True</value>
     <value key="compile">False</value>
