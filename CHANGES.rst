@@ -1,8 +1,7 @@
 Changelog
 =========
 
-
-2.0.0 (unreleased)
+2.0.2 (2026-01-17)
 ------------------
 
 Added:
@@ -17,6 +16,15 @@ Added:
   [olda-a]
 
 Changed:
+
+- fix: improve build and use minified js again
+  [julian pollinger]
+
+- fix: apply mouse event on html instead of body
+  [julian pollinger]
+
+- Fixed Bug check permission in context
+  [julian pollinger]
 
 - Update buildout to Plone 6.
   [santonelli]
