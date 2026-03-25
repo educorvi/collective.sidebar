@@ -1,86 +1,87 @@
 <configure
-  xmlns="http://namespaces.zope.org/zope"
-  xmlns:genericsetup="http://namespaces.zope.org/genericsetup">
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    >
 
-<!-- Upgrade Profiles -->
-
-  <genericsetup:registerProfile
-    name="to_1001"
-    title="Upgrade profile for collective.sidebar 1000 to 1001"
-    directory="profiles/to_1001"
-    description=""
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+  <!-- Upgrade Profiles -->
 
   <genericsetup:registerProfile
-    name="to_1300"
-    title="Upgrade profile for collective.sidebar 1001 to 1300"
-    directory="profiles/to_1300"
-    description=""
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+      name="to_1001"
+      title="Upgrade profile for collective.sidebar 1000 to 1001"
+      description=""
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/to_1001"
+      />
 
   <genericsetup:registerProfile
-    name="to_1400"
-    title="Upgrade profile for collective.sidebar 1300 to 1400"
-    directory="profiles/to_1400"
-    description=""
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+      name="to_1300"
+      title="Upgrade profile for collective.sidebar 1001 to 1300"
+      description=""
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/to_1300"
+      />
 
   <genericsetup:registerProfile
-    name="to_1500"
-    title="Upgrade profile for collective.sidebar 1400 to 1500"
-    directory="profiles/to_1500"
-    description=""
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+      name="to_1400"
+      title="Upgrade profile for collective.sidebar 1300 to 1400"
+      description=""
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/to_1400"
+      />
 
-   <genericsetup:registerProfile
-    name="to_1600"
-    title="Upgrade profile for collective.sidebar 1500 to 1600"
-    directory="profiles/to_1600"
-    description=""
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+  <genericsetup:registerProfile
+      name="to_1500"
+      title="Upgrade profile for collective.sidebar 1400 to 1500"
+      description=""
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/to_1500"
+      />
+
+  <genericsetup:registerProfile
+      name="to_1600"
+      title="Upgrade profile for collective.sidebar 1500 to 1600"
+      description=""
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/to_1600"
+      />
 
 
-<!-- Upgrade Step for 1.0.0a10 -->
-
-  <genericsetup:upgradeStep
-    profile="profile-collective.sidebar:default"
-    source="1000"
-    destination="1001"
-    title="Remove Sidebar Bundles / Resources"
-    description="Remove Sidebar Bundles / Resources"
-    handler="collective.sidebar.upgrades.to_1001"
-    />
-
-  <genericsetup:upgradeStep
-    profile="profile-collective.sidebar:default"
-    source="1001"
-    destination="1300"
-    title="Add registry settings"
-    description="Add registry settings"
-    handler="collective.sidebar.upgrades.to_1300"
-    />
+  <!-- Upgrade Step for 1.0.0a10 -->
 
   <genericsetup:upgradeStep
-    profile="profile-collective.sidebar:default"
-    source="1300"
-    destination="1400"
-    title="Add registry settings"
-    description="Add registry settings"
-    handler="collective.sidebar.upgrades.to_1400"
-    />
+      title="Remove Sidebar Bundles / Resources"
+      description="Remove Sidebar Bundles / Resources"
+      profile="profile-collective.sidebar:default"
+      source="1000"
+      destination="1001"
+      handler="collective.sidebar.upgrades.to_1001"
+      />
 
   <genericsetup:upgradeStep
-    profile="profile-collective.sidebar:default"
-    source="1400"
-    destination="1500"
-    title="Add registry settings"
-    description="Add registry settings"
-    handler="collective.sidebar.upgrades.to_1500"
-    />
+      title="Add registry settings"
+      description="Add registry settings"
+      profile="profile-collective.sidebar:default"
+      source="1001"
+      destination="1300"
+      handler="collective.sidebar.upgrades.to_1300"
+      />
+
+  <genericsetup:upgradeStep
+      title="Add registry settings"
+      description="Add registry settings"
+      profile="profile-collective.sidebar:default"
+      source="1300"
+      destination="1400"
+      handler="collective.sidebar.upgrades.to_1400"
+      />
+
+  <genericsetup:upgradeStep
+      title="Add registry settings"
+      description="Add registry settings"
+      profile="profile-collective.sidebar:default"
+      source="1400"
+      destination="1500"
+      handler="collective.sidebar.upgrades.to_1500"
+      />
 
 </configure>

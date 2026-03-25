@@ -2,9 +2,13 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="collective.sidebar">
+    i18n_domain="collective.sidebar"
+    >
 
-  <include package="z3c.jbot" file="meta.zcml" />
+  <include
+      package="z3c.jbot"
+      file="meta.zcml"
+      />
 
   <browser:jbot
       directory="overrides"
@@ -12,15 +16,15 @@
       />
 
   <browser:resourceDirectory
-      directory="static"
       name="collective.sidebar"
+      directory="static"
       />
 
   <interface interface="collective.sidebar.interfaces.INavigationEndpoint" />
 
   <browser:page
-      for="*"
       name="navigation"
+      for="*"
       class=".sidebar.NavigationView"
       permission="zope2.View"
       layer="collective.sidebar.interfaces.ICollectiveSidebarLayer"
@@ -29,16 +33,16 @@
   <browser:viewlet
       name="sidebar"
       manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
-      layer="collective.sidebar.interfaces.ICollectiveSidebarLayer"
       class=".sidebar.SidebarViewlet"
       permission="zope2.View"
+      layer="collective.sidebar.interfaces.ICollectiveSidebarLayer"
       />
 
   <browser:viewletManager
       name="plone.toolbar"
       provides="plone.app.layout.viewlets.interfaces.IToolbar"
-      permission="zope2.View"
       class=".toolbar.ToolbarViewletManager"
+      permission="zope2.View"
       layer="collective.sidebar.interfaces.ICollectiveSidebarLayer"
       />
 

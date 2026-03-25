@@ -7,12 +7,12 @@ from zope.schema.vocabulary import SimpleVocabulary
 
 positionTerms = [
     SimpleTerm(
-        value=u'start',
-        title=_(u'left_in_ltr', default=u'Left (in LTR)'),
+        value="start",
+        title=_("left_in_ltr", default="Left (in LTR)"),
     ),
     SimpleTerm(
-        value=u'end',
-        title=_(u'right_in_ltr', default=u'Right (in LTR)'),
+        value="end",
+        title=_("right_in_ltr", default="Right (in LTR)"),
     ),
 ]
 

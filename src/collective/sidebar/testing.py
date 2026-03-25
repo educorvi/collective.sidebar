@@ -29,10 +29,10 @@ def setup_sdm(portal):
     """
     Setup session data manager.
     """
-    tf_name = 'temp_folder'
-    idmgr_name = 'browser_id_manager'
-    toc_name = 'temp_transient_container'
-    sdm_name = 'session_data_manager'
+    tf_name = "temp_folder"
+    idmgr_name = "browser_id_manager"
+    toc_name = "temp_transient_container"
+    sdm_name = "session_data_manager"
 
     from Products.Sessions.BrowserIdManager import BrowserIdManager
     from Products.Sessions.SessionDataManager import SessionDataManager
@@ -42,17 +42,17 @@ def setup_sdm(portal):
     import transaction
 
     bidmgr = BrowserIdManager(idmgr_name)
-    tf = MountedTemporaryFolder(tf_name, title='Temporary Folder')
+    tf = MountedTemporaryFolder(tf_name, title="Temporary Folder")
     toc = TransientObjectContainer(
         toc_name,
-        title='Temporary Transient Object Container',
+        title="Temporary Transient Object Container",
         timeout_mins=20,
     )
     session_data_manager = SessionDataManager(
         id=sdm_name,
-        path=tf_name + '/' + toc_name,
-        title='Session Data Manager',
-        requestName='TESTOFSESSION',
+        path=tf_name + "/" + toc_name,
+        title="Session Data Manager",
+        requestName="TESTOFSESSION",
     )
     portal._setObject(idmgr_name, bidmgr)
     portal._setObject(sdm_name, session_data_manager)
@@ -62,31 +62,30 @@ def setup_sdm(portal):
 
 
 class CollectiveSidebarLayer(PloneSandboxLayer):
-
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        request = aq_get(app, 'REQUEST')
-        request.environ['HTTP_ACCEPT_LANGUAGE'] = 'de'
+        request = aq_get(app, "REQUEST")
+        request.environ["HTTP_ACCEPT_LANGUAGE"] = "de"
         self.loadZCML(package=collective.sidebar)
 
     def setUpPloneSite(self, portal):
-        applyProfile(portal, 'collective.sidebar:default')
+        applyProfile(portal, "collective.sidebar:default")
         portal.acl_users.userFolderAddUser(
             SITE_OWNER_NAME,
             SITE_OWNER_PASSWORD,
-            ['Manager'],
+            ["Manager"],
             [],
         )
 
 
 class CollectiveSidebarTestingLayer(CollectiveSidebarLayer):
     def setUpPloneSite(self, portal):  # noqa
-        applyProfile(portal, 'collective.sidebar:testing')
+        applyProfile(portal, "collective.sidebar:testing")
         portal.acl_users.userFolderAddUser(
             SITE_OWNER_NAME,
             SITE_OWNER_PASSWORD,
-            ['Manager'],
+            ["Manager"],
             [],
         )
 
@@ -103,13 +102,13 @@ COLLECTIVE_SIDEBAR_ACCEPTANCE_SESSION_FIXTURE = CollectiveSidebarSessionLayer()
 
 COLLECTIVE_SIDEBAR_INTEGRATION_TESTING = IntegrationTesting(
     bases=(COLLECTIVE_SIDEBAR_TESTING_FIXTURE,),
-    name='CollectiveSidebarLayer:IntegrationTesting',
+    name="CollectiveSidebarLayer:IntegrationTesting",
 )
 
 
 COLLECTIVE_SIDEBAR_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(COLLECTIVE_SIDEBAR_TESTING_FIXTURE,),
-    name='CollectiveSidebarLayer:FunctionalTesting',
+    name="CollectiveSidebarLayer:FunctionalTesting",
 )
 
 
@@ -119,5 +118,5 @@ COLLECTIVE_SIDEBAR_ACCEPTANCE_TESTING = FunctionalTesting(
         REMOTE_LIBRARY_BUNDLE_FIXTURE,
         z2.ZSERVER_FIXTURE,
     ),
-    name='CollectiveSidebarLayer:AcceptanceTesting',
+    name="CollectiveSidebarLayer:AcceptanceTesting",
 )

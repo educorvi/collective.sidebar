@@ -1,32 +1,51 @@
-<?xml version="1.0"?>
-<object name="portal_actions" meta_type="Plone Actions Tool" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+<?xml version="1.0" encoding="utf-8"?>
+<object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+        meta_type="Plone Actions Tool"
+        name="portal_actions"
+>
 
   <action-provider name="portal_workflow" />
   <action-provider name="portal_types" />
   <action-provider name="portal_actions" />
 
-  <object name="sidebar_links" meta_type="CMF Action Category">
+  <object meta_type="CMF Action Category"
+          name="sidebar_links"
+  >
 
     <property name="title">Sidebar Links</property>
 
-    <object name="home" meta_type="CMF Action" i18n:domain="collective.sidebar">
-      <property name="title" i18n:translate="">Home</property>
-      <property name="description" i18n:translate=""></property>
+    <object meta_type="CMF Action"
+            name="home"
+            i18n:domain="collective.sidebar"
+    >
+      <property name="title"
+                i18n:translate=""
+      >Home</property>
+      <property name="description"
+                i18n:translate=""
+      />
       <property name="url_expr">string:${portal_url}</property>
-      <property name="link_target"></property>
+      <property name="link_target" />
       <property name="icon_expr">string:plone-home</property>
-      <property name="available_expr"></property>
+      <property name="available_expr" />
       <property name="permissions">
         <element value="View" />
       </property>
       <property name="visible">True</property>
     </object>
 
-    <object name="login" meta_type="CMF Action" i18n:domain="collective.sidebar">
-      <property name="title" i18n:translate="">Login</property>
-      <property name="description" i18n:translate=""></property>
+    <object meta_type="CMF Action"
+            name="login"
+            i18n:domain="collective.sidebar"
+    >
+      <property name="title"
+                i18n:translate=""
+      >Login</property>
+      <property name="description"
+                i18n:translate=""
+      />
       <property name="url_expr">string:${portal_url}/login</property>
-      <property name="link_target"></property>
+      <property name="link_target" />
       <property name="icon_expr">string:plone-login</property>
       <property name="available_expr">python:member is None</property>
       <property name="permissions">
@@ -35,11 +54,18 @@
       <property name="visible">True</property>
     </object>
 
-    <object name="logout" meta_type="CMF Action" i18n:domain="collective.sidebar">
-      <property name="title" i18n:translate="">Logout</property>
-      <property name="description" i18n:translate=""></property>
+    <object meta_type="CMF Action"
+            name="logout"
+            i18n:domain="collective.sidebar"
+    >
+      <property name="title"
+                i18n:translate=""
+      >Logout</property>
+      <property name="description"
+                i18n:translate=""
+      />
       <property name="url_expr">string:${portal_url}/logout</property>
-      <property name="link_target"></property>
+      <property name="link_target" />
       <property name="icon_expr">string:plone-logout</property>
       <property name="available_expr">python:member is not None</property>
       <property name="permissions">

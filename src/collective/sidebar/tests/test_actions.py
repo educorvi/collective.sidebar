@@ -9,20 +9,19 @@ import unittest
 
 
 class TestActionsFunctional(unittest.TestCase):
-
     layer = COLLECTIVE_SIDEBAR_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         self.nav_data_view = api.content.get_view(
-            name='navData',
+            name="navData",
             context=self.portal,
             request=self.request,
         )
         self.viewlet = self.nav_data_view.render_viewlet
-        self.portal_actions = api.portal.get_tool('portal_actions')
-        self.sidebar_links = self.portal_actions.get('sidebar_links')
+        self.portal_actions = api.portal.get_tool("portal_actions")
+        self.sidebar_links = self.portal_actions.get("sidebar_links")
         login(self.portal, SITE_OWNER_NAME)
 
     def test_action_links(self):
@@ -37,7 +36,7 @@ class TestActionsFunctional(unittest.TestCase):
             home_el,
             self.viewlet(context=self.portal, request=self.request),
         )
-        home_link = self.sidebar_links.get('home')
+        home_link = self.sidebar_links.get("home")
         home_link.visible = False
         self.assertNotIn(
             home_el,
@@ -45,13 +44,13 @@ class TestActionsFunctional(unittest.TestCase):
         )
         # Add a new action to the sidebar_links
         new_action_view = api.content.get_view(
-            name='new-action',
+            name="new-action",
             context=self.portal,
             request=self.request,
         )
         new_action_view.createAndAdd({
-            'id': 'Contact',
-            'category': 'sidebar_links',
+            "id": "Contact",
+            "category": "sidebar_links",
         })
         self.assertIn(
             '<span class="menu-item-title">Contact</span>',

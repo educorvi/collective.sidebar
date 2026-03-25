@@ -6,17 +6,16 @@ from zope.interface import implementer
 
 @implementer(INonInstallable)
 class HiddenProfiles(object):
-
     def getNonInstallableProfiles(self):
         """Hide uninstall profile from site-creation and quickinstaller"""
         return [
-            'collective.sidebar:testing',
-            'collective.sidebar:uninstall',
-            'collective.sidebar:to_1001',
-            'collective.sidebar:to_1300',
-            'collective.sidebar:to_1400',
-            'collective.sidebar:to_1500',
-            'collective.sidebar:to_1600',
+            "collective.sidebar:testing",
+            "collective.sidebar:uninstall",
+            "collective.sidebar:to_1001",
+            "collective.sidebar:to_1300",
+            "collective.sidebar:to_1400",
+            "collective.sidebar:to_1500",
+            "collective.sidebar:to_1600",
         ]
 
 
@@ -34,10 +33,10 @@ def testing(context):
     """post_handler for the collective.sidebar:testing profile"""
     # Do something at the end of the testing installation of this package.
     api.user.create(
-        email='max.mustermann@testing.com',
-        username='mmustermann',
-        password='testing@collective.sidebar123',
+        email="max.mustermann@testing.com",
+        username="mmustermann",
+        password="testing@collective.sidebar123",
         properties={
-            'fullname': u'Max Mustermann',
+            "fullname": "Max Mustermann",
         },
     )

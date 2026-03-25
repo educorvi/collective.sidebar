@@ -1,11 +1,15 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <registry>
 
-  <records interface="Products.CMFPlone.interfaces.IResourceRegistry" prefix="plone.resources/mockup-patterns-structureupdater">
+  <records interface="Products.CMFPlone.interfaces.IResourceRegistry"
+           prefix="plone.resources/mockup-patterns-structureupdater"
+  >
     <value key="js">++resource++collective.sidebar/js/mockup-patterns-structureupdater.min.js</value>
   </records>
 
-  <records interface="Products.CMFPlone.interfaces.IBundleRegistry" prefix="plone.bundles/sidebar">
+  <records interface="Products.CMFPlone.interfaces.IBundleRegistry"
+           prefix="plone.bundles/sidebar"
+  >
     <value key="jscompilation">++resource++collective.sidebar/js/sidebar.min.js</value>
     <value key="csscompilation">++resource++collective.sidebar/css/sidebar.min.css</value>
     <value key="enabled">True</value>
@@ -13,6 +17,8 @@
     <value key="last_compilation">2020-06-18 18:00:00</value>
   </records>
 
-  <records interface="collective.sidebar.controlpanel.controlpanel.IControlPanel" prefix="collective.sidebar" />
+  <records interface="collective.sidebar.controlpanel.controlpanel.IControlPanel"
+           prefix="collective.sidebar"
+  />
 
 </registry>

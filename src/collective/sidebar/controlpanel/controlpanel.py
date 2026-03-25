@@ -10,48 +10,40 @@ from zope.interface import Interface
 
 
 class IControlPanel(Interface):
-    
     enable_siteactions = schema.Bool(
         title=_(
-            u'controlpanel_sidebar_show_siteactions_title',
-            default='Show Site Actions Section',
+            "controlpanel_sidebar_show_siteactions_title",
+            default="Show Site Actions Section",
         ),
         description=_(
-            u'controlpanel_sidebar_show_siteactions_description',
-            default=(
-                u'Show Siteactions section.'
-            ),
-        ),
-        required=False,
-        default=True,
-    )
-    
-    enable_sitelinks = schema.Bool(
-        title=_(
-            u'controlpanel_sidebar_show_sitelinks_title',
-            default='Show Site Links Section',
-        ),
-        description=_(
-            u'controlpanel_sidebar_show_sitelinks_description',
-            default=(
-                u'Show Sitelinks section.'
-            ),
+            "controlpanel_sidebar_show_siteactions_description",
+            default=("Show Siteactions section."),
         ),
         required=False,
         default=True,
     )
 
+    enable_sitelinks = schema.Bool(
+        title=_(
+            "controlpanel_sidebar_show_sitelinks_title",
+            default="Show Site Links Section",
+        ),
+        description=_(
+            "controlpanel_sidebar_show_sitelinks_description",
+            default=("Show Sitelinks section."),
+        ),
+        required=False,
+        default=True,
+    )
 
     enable_navigation = schema.Bool(
         title=_(
-            u'controlpanel_sidebar_show_navigation_title',
-            default='Show Navigation Section',
+            "controlpanel_sidebar_show_navigation_title",
+            default="Show Navigation Section",
         ),
         description=_(
-            u'controlpanel_sidebar_show_navigation_description',
-            default=(
-                u'Show navigation section.'
-            ),
+            "controlpanel_sidebar_show_navigation_description",
+            default=("Show navigation section."),
         ),
         required=False,
         default=True,
@@ -59,14 +51,13 @@ class IControlPanel(Interface):
 
     root_nav = schema.Bool(
         title=_(
-            u'controlpanel_sidebar_show_root_nav_title',
-            default='Root Level Navigation',
+            "controlpanel_sidebar_show_root_nav_title",
+            default="Root Level Navigation",
         ),
         description=_(
-            u'controlpanel_sidebar_show_root_nav_description',
+            "controlpanel_sidebar_show_root_nav_description",
             default=(
-                u'When enabled, the sidebar will display '
-                u'the root level navigation.'
+                "When enabled, the sidebar will display the root level navigation."
             ),
         ),
         required=False,
@@ -75,12 +66,12 @@ class IControlPanel(Interface):
 
     dynamic_navigation = schema.Bool(
         title=_(
-            u'controlpanel_sidebar_dynamic_navigation_title',
-            default='Enable dynamic Navigation',
+            "controlpanel_sidebar_dynamic_navigation_title",
+            default="Enable dynamic Navigation",
         ),
         description=_(
-            u'controlpanel_sidebar_dynamic_navigation_description',
-            default=(u'Enable dynamic navigation inside sidebar.'),
+            "controlpanel_sidebar_dynamic_navigation_description",
+            default=("Enable dynamic navigation inside sidebar."),
         ),
         required=False,
         default=True,
@@ -88,30 +79,28 @@ class IControlPanel(Interface):
 
     enable_actions = schema.Bool(
         title=_(
-            u'controlpanel_sidebar_show_actions_title',
-            default='Show Actions Section',
+            "controlpanel_sidebar_show_actions_title",
+            default="Show Actions Section",
         ),
         description=_(
-            u'controlpanel_sidebar_show_actions_description',
+            "controlpanel_sidebar_show_actions_description",
             default=(
-                u'Show actions section including object '
-                u'buttons for cut, copy, paste, etc.'
+                "Show actions section including object "
+                "buttons for cut, copy, paste, etc."
             ),
         ),
         required=False,
         default=True,
     )
-    
+
     enable_portlets = schema.Bool(
         title=_(
-            u'controlpanel_sidebar_show_portlets_title',
-            default='Show Manage Portlets Section',
+            "controlpanel_sidebar_show_portlets_title",
+            default="Show Manage Portlets Section",
         ),
         description=_(
-            u'controlpanel_sidebar_show_portlets_description',
-            default=(
-                u'Show manage portlets link' 
-            ),
+            "controlpanel_sidebar_show_portlets_description",
+            default=("Show manage portlets link"),
         ),
         required=False,
         default=True,
@@ -119,14 +108,14 @@ class IControlPanel(Interface):
 
     enable_collapse = schema.Bool(
         title=_(
-            u'controlpanel_sidebar_enable_collapse_title',
-            default='Collapsible Sections',
+            "controlpanel_sidebar_enable_collapse_title",
+            default="Collapsible Sections",
         ),
         description=_(
-            u'controlpanel_sidebar_enable_collapse_description',
+            "controlpanel_sidebar_enable_collapse_description",
             default=(
-                u'When enabled, the sidebar sections can be collapsed. '
-                u'This feature is only available when cookies are enabled.'
+                "When enabled, the sidebar sections can be collapsed. "
+                "This feature is only available when cookies are enabled."
             ),
         ),
         required=False,
@@ -135,26 +124,26 @@ class IControlPanel(Interface):
 
     sidebar_position = schema.Choice(
         title=_(
-            u'controlpanel_sidebar_sidebar_position_title',
-            default='Sidebar Position',
+            "controlpanel_sidebar_sidebar_position_title",
+            default="Sidebar Position",
         ),
         description=_(
-            u'controlpanel_sidebar_sidebar_position_description',
-            default=u'Display the sidebar on the left or right.',
+            "controlpanel_sidebar_sidebar_position_description",
+            default="Display the sidebar on the left or right.",
         ),
         vocabulary=PositionVocabulary,
         required=True,
-        default='start',
+        default="start",
     )
 
     mouse = schema.Bool(
         title=_(
-            u'controlpanel_mouse_title',
-            default='Mouse activated',
+            "controlpanel_mouse_title",
+            default="Mouse activated",
         ),
         description=_(
-            u'controlpanel_mouse_description',
-            default=(u'When enabled, the sidebar will be opened by mouse.'),
+            "controlpanel_mouse_description",
+            default=("When enabled, the sidebar will be opened by mouse."),
         ),
         required=False,
         default=True,
@@ -162,12 +151,12 @@ class IControlPanel(Interface):
 
     mouse_area = schema.Int(
         title=_(
-            u'controlpanel_mouse_area_title',
-            default='Mouse Activation Area',
+            "controlpanel_mouse_area_title",
+            default="Mouse Activation Area",
         ),
         description=_(
-            u'controlpanel_mouse_area_description',
-            default=(u'Enter the number of pixels to activate the sidebar.'),
+            "controlpanel_mouse_area_description",
+            default=("Enter the number of pixels to activate the sidebar."),
         ),
         required=False,
         default=30,
@@ -176,8 +165,8 @@ class IControlPanel(Interface):
 
 class ControlPanelEditForm(RegistryEditForm):
     schema = IControlPanel
-    schema_prefix = 'collective.sidebar'
-    label = _(u'collective_sidebar_title', default=u'Collective Sidebar')
+    schema_prefix = "collective.sidebar"
+    label = _("collective_sidebar_title", default="Collective Sidebar")
 
 
 ControlPanelView = layout.wrap_form(

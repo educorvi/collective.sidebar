@@ -23,14 +23,13 @@ import pkg_resources
 
 
 class NavigationView(BrowserView):
-
-    template = ViewPageTemplateFile('templates/navigation.pt')
+    template = ViewPageTemplateFile("templates/navigation.pt")
 
     def __call__(self):
         return self.template()
 
     def getFolderContents(self, item):
-        contents =  api.content.find(context=item, depth=1)
+        contents = api.content.find(context=item, depth=1)
         if contents:
             return contents
         return None
@@ -39,7 +38,7 @@ class NavigationView(BrowserView):
         """
         Check settings if content type should be displayed in navigation.
         """
-        types = api.portal.get_registry_record(name='plone.displayed_types')
+        types = api.portal.get_registry_record(name="plone.displayed_types")
         if item.portal_type not in types:
             return True
 
@@ -48,10 +47,10 @@ class NavigationView(BrowserView):
         Check workflow settings if item should be displayed in navigation.
         """
         filter = api.portal.get_registry_record(
-            name='plone.filter_on_workflow',
+            name="plone.filter_on_workflow",
         )
         states = api.portal.get_registry_record(
-            name='plone.workflow_states_to_show',
+            name="plone.workflow_states_to_show",
         )
         if filter:
             state = api.content.get_state(obj=item)
@@ -86,10 +85,10 @@ class NavigationView(BrowserView):
         portal = api.portal.get()
         parent = context.aq_parent
         root_nav = api.portal.get_registry_record(
-            name='collective.sidebar.root_nav',
+            name="collective.sidebar.root_nav",
             default=False,
         )
-        if context == portal or context.portal_type == 'LRF' or root_nav:
+        if context == portal or context.portal_type == "LRF" or root_nav:
             return None
         try:
             if parent.default_page == context.id:
@@ -106,10 +105,10 @@ class NavigationView(BrowserView):
         """
         if self.get_back() and IFolderish.providedBy(self.context):
             data = {
-                'title': self.context.Title(),
-                'title_cropped': crop(self.context.Title(), 100),
-                'url': self.context.absolute_url(),
-                'type': 'link-folder',
+                "title": self.context.Title(),
+                "title_cropped": crop(self.context.Title(), 100),
+                "url": self.context.absolute_url(),
+                "type": "link-folder",
             }
             return data
 
@@ -130,11 +129,11 @@ class NavigationView(BrowserView):
         """
         context = self.context
         root_nav = api.portal.get_registry_record(
-            name='collective.sidebar.root_nav',
+            name="collective.sidebar.root_nav",
             default=False,
         )
         view_types = api.portal.get_registry_record(
-            name='plone.types_use_view_action_in_listings',
+            name="plone.types_use_view_action_in_listings",
         )
 
         # root level navigation is enabled in settings
@@ -160,60 +159,57 @@ class NavigationView(BrowserView):
 
         items = list()
 
-
         if contents:
             for item in contents:
                 if self.check_item(item):
-                    item_type = 'link-item'
+                    item_type = "link-item"
                     url = item.getURL()
                     if item.portal_type in view_types:
-                        url = url + '/view'
+                        url = url + "/view"
                     if item.is_folderish and self.contains_items(item):
-                        item_type = 'link-folder'
+                        item_type = "link-folder"
                     data = {
-                        'title': item.Title,
-                        'title_cropped': crop(item.Title, 100),
-                        'url': url,
-                        'type': item_type,
+                        "title": item.Title,
+                        "title_cropped": crop(item.Title, 100),
+                        "url": url,
+                        "type": item_type,
                     }
                     items.append(data)
         return items
 
 
 class SidebarViewlet(ViewletBase):
-    index = ViewPageTemplateFile('templates/sidebar.pt')
+    index = ViewPageTemplateFile("templates/sidebar.pt")
 
     def getFolderContents(self, item):
-        contents =  api.content.find(context=item, depth= 1)
+        contents = api.content.find(context=item, depth=1)
         if contents:
             return contents
         return None
 
     def get_mouse_activated(self):
-        """Pass in values to be used in JavaScript
-        """
+        """Pass in values to be used in JavaScript"""
         mouse = api.portal.get_registry_record(
-            name='collective.sidebar.mouse',
+            name="collective.sidebar.mouse",
             default=True,
         )
         if mouse:
-            return 'true'
+            return "true"
         else:
-            return 'false'
+            return "false"
 
     def get_mouse_area(self):
-        """Pass in values to be used in JavaScript
-        """
+        """Pass in values to be used in JavaScript"""
         mouse_area = api.portal.get_registry_record(
-            name='collective.sidebar.mouse_area',
+            name="collective.sidebar.mouse_area",
             default=30,
         )
         return str(mouse_area)
 
     def get_sidebar_position(self):
         position = api.portal.get_registry_record(
-            name='collective.sidebar.sidebar_position',
-            default='start',
+            name="collective.sidebar.sidebar_position",
+            default="start",
         )
         return position
 
@@ -244,7 +240,7 @@ class SidebarViewlet(ViewletBase):
         Return site actions.
         """
         links = self.context.portal_actions.listFilteredActionsFor(self.context)  # noqa: 501
-        site_actions = links.get('site_actions', [])
+        site_actions = links.get("site_actions", [])
         return site_actions
 
     def get_user_actions(self):
@@ -252,7 +248,7 @@ class SidebarViewlet(ViewletBase):
         Return user actions.
         """
         links = self.context.portal_actions.listFilteredActionsFor(self.context)  # noqa: 501
-        user = links.get('user', [])
+        user = links.get("user", [])
         return user
 
     def get_static_links(self):
@@ -260,19 +256,19 @@ class SidebarViewlet(ViewletBase):
         Return sidebar links from portal_actions.
         """
         links = self.context.portal_actions.listFilteredActionsFor(self.context)  # noqa: 501
-        sidebar_links = links.get('sidebar_links', [])
+        sidebar_links = links.get("sidebar_links", [])
         return sidebar_links
 
     def get_user_data(self):
         user = get_user()
-        mtool = api.portal.get_tool('portal_membership')
+        mtool = api.portal.get_tool("portal_membership")
         portrait = mtool.getPersonalPortrait(id=user[1])
         user_info = mtool.getMemberInfo(user[1])
         portal_url = self.get_portal_url()
         data = {
-            'user_info': user_info,
-            'portrait': portrait.absolute_url(),
-            'user_url': portal_url + '/@@personal-information',
+            "user_info": user_info,
+            "portrait": portrait.absolute_url(),
+            "user_url": portal_url + "/@@personal-information",
         }
         return data
 
@@ -291,13 +287,13 @@ class SidebarViewlet(ViewletBase):
         """Return username oder user's fullname"""
         user = self.get_current_user()
         username = user.id
-        fullname = user.getProperty('fullname')
+        fullname = user.getProperty("fullname")
         if fullname:
             username = fullname
         return username
 
     def get_portrait_url(self):
-        member_tool = api.portal.get_tool('portal_membership')
+        member_tool = api.portal.get_tool("portal_membership")
         user = api.user.get_current()
         user_id = user.id
         portrait = member_tool.getPersonalPortrait(id=user_id)
@@ -319,10 +315,10 @@ class SidebarViewlet(ViewletBase):
         portal = api.portal.get()
         parent = context.aq_parent
         root_nav = api.portal.get_registry_record(
-            name='collective.sidebar.root_nav',
+            name="collective.sidebar.root_nav",
             default=False,
         )
-        if context == portal or context.portal_type == 'LRF' or root_nav:
+        if context == portal or context.portal_type == "LRF" or root_nav:
             return None
         try:
             if parent.default_page == context.id:
@@ -337,7 +333,9 @@ class SidebarViewlet(ViewletBase):
         """
         Check if the user can modify content.
         """
-        return api.user.has_permission(permission="Modify portal content", obj=self.context)
+        return api.user.has_permission(
+            permission="Modify portal content", obj=self.context
+        )
 
     def can_manage_portal(self):
         """
@@ -349,7 +347,7 @@ class SidebarViewlet(ViewletBase):
         """
         Check settings if content type should be displayed in navigation.
         """
-        types = api.portal.get_registry_record(name='plone.displayed_types')
+        types = api.portal.get_registry_record(name="plone.displayed_types")
         if item.portal_type not in types:
             return True
 
@@ -358,10 +356,10 @@ class SidebarViewlet(ViewletBase):
         Check workflow settings if item should be displayed in navigation.
         """
         filter = api.portal.get_registry_record(
-            name='plone.filter_on_workflow',
+            name="plone.filter_on_workflow",
         )
         states = api.portal.get_registry_record(
-            name='plone.workflow_states_to_show',
+            name="plone.workflow_states_to_show",
         )
         if filter:
             state = api.content.get_state(obj=item.getObject())
@@ -391,7 +389,7 @@ class SidebarViewlet(ViewletBase):
         """
         context = self.context
         root_nav = api.portal.get_registry_record(
-            name='collective.sidebar.root_nav',
+            name="collective.sidebar.root_nav",
             default=False,
         )
         if root_nav:
@@ -399,12 +397,12 @@ class SidebarViewlet(ViewletBase):
 
         contents = []
         if IFolderish.providedBy(context):
-            contents =  api.content.find(context=context, depth= 1)
+            contents = api.content.find(context=context, depth=1)
         else:
             # Can not remember what edgecase we catch here.
             try:
                 parent = context.aq_parent
-                contents =  api.content.find(context=parent, depth= 1)
+                contents = api.content.find(context=parent, depth=1)
 
             except Exception:  # noqa: 902
                 pass
@@ -413,9 +411,9 @@ class SidebarViewlet(ViewletBase):
         for item in contents:
             if self.check_item(item):
                 data = {
-                    'title': item.Title,
-                    'title_cropped': crop(item.Title, 100),
-                    'url': item.getURL(),
+                    "title": item.Title,
+                    "title_cropped": crop(item.Title, 100),
+                    "url": item.getURL(),
                 }
                 items.append(data)
         return items
@@ -426,8 +424,8 @@ class SidebarViewlet(ViewletBase):
         """
         context = self.context
         parent = context.aq_parent
-        context_url = context.absolute_url() + '/folder_contents'
-        parent_url = parent.absolute_url() + '/folder_contents'
+        context_url = context.absolute_url() + "/folder_contents"
+        parent_url = parent.absolute_url() + "/folder_contents"
         try:
             if parent.default_page == context.id:
                 return parent_url
@@ -445,7 +443,7 @@ class SidebarViewlet(ViewletBase):
         state = self.get_workflow_state()
         tools = getMultiAdapter(
             (self.context, self.request),
-            name='plone_tools',
+            name="plone_tools",
         )
         workflows = tools.workflow().getWorkflowsFor(self.context)
         if workflows:
@@ -468,7 +466,7 @@ class SidebarViewlet(ViewletBase):
         TODO: This should be a switch in the backend # noqa: T000
               to enable colored states.
         """
-        return 'with-state-color'
+        return "with-state-color"
 
     def get_workflow_state(self):
         """
@@ -483,74 +481,79 @@ class SidebarViewlet(ViewletBase):
         if api.user.is_anonymous():
             return []
         from plone.app.contentmenu import PloneMessageFactory as _
+
         context = self.context
         request = context.REQUEST
         try:
-            pkg_resources.get_distribution('Products.CMFPlacefulWorkflow')
-            from Products.CMFPlacefulWorkflow.permissions import ManageWorkflowPolicies  # noqa: 501
+            pkg_resources.get_distribution("Products.CMFPlacefulWorkflow")
+            from Products.CMFPlacefulWorkflow.permissions import (
+                ManageWorkflowPolicies,  # noqa: 501
+            )
         except pkg_resources.DistributionNotFound:
-            from Products.CMFCore.permissions import ManagePortal as ManageWorkflowPolicies  # noqa: 501
+            from Products.CMFCore.permissions import (
+                ManagePortal as ManageWorkflowPolicies,  # noqa: 501
+            )
         results = []
         locking_info = queryMultiAdapter(
             (context, request),
-            name='plone_lock_info',
+            name="plone_lock_info",
         )
         if locking_info and locking_info.is_locked_for_current_user():
             return []
-        wf_tool = api.portal.get_tool('portal_workflow')
+        wf_tool = api.portal.get_tool("portal_workflow")
         workflowActions = wf_tool.listActionInfos(object=context)
         for action in workflowActions:
-            if action['category'] != 'workflow':
+            if action["category"] != "workflow":
                 continue
-            cssClass = ''
-            actionUrl = action['url']
-            if actionUrl == '':
-                actionUrl = '{0}/content_status_modify?workflow_action={1}'
+            cssClass = ""
+            actionUrl = action["url"]
+            if actionUrl == "":
+                actionUrl = "{0}/content_status_modify?workflow_action={1}"
                 actionUrl = actionUrl.format(
                     context.absolute_url(),
-                    action['id'],
+                    action["id"],
                 )
-                cssClass = ''
-            description = ''
-            transition = action.get('transition', None)
+                cssClass = ""
+            description = ""
+            transition = action.get("transition", None)
             if transition is not None:
                 description = transition.description
-            if action['allowed']:
+            if action["allowed"]:
                 results.append({
-                    'title': action['title'],
-                    'description': description,
-                    'action': addTokenToUrl(actionUrl, request),
-                    'selected': False,
-                    'icon': None,
-                    'extra': {
-                        'id': 'workflow-transition-{0}'.format(action['id']),
-                        'separator': None,
-                        'class': cssClass,
+                    "title": action["title"],
+                    "description": description,
+                    "action": addTokenToUrl(actionUrl, request),
+                    "selected": False,
+                    "icon": None,
+                    "extra": {
+                        "id": "workflow-transition-{0}".format(action["id"]),
+                        "separator": None,
+                        "class": cssClass,
                     },
-                    'submenu': None,
+                    "submenu": None,
                 })
         url = context.absolute_url()
 
         try:
-            pw = api.portal.get_tool('portal_placeful_workflow')
+            pw = api.portal.get_tool("portal_placeful_workflow")
         except InvalidParameterError:
             pw = None
 
         if pw is not None:
-            permission = 'ManageWorkflowPolicies'
+            permission = "ManageWorkflowPolicies"
             if api.user.has_permission(permission, obj=self.context):
                 results.append({
-                    'title': _(u'workflow_policy', default=u'Policy...'),
-                    'description': '',
-                    'action': url + '/placeful_workflow_configuration',
-                    'selected': False,
-                    'icon': None,
-                    'extra': {
-                        'id': 'workflow-transition-policy',
-                        'separator': None,
-                        'class': '',
+                    "title": _("workflow_policy", default="Policy..."),
+                    "description": "",
+                    "action": url + "/placeful_workflow_configuration",
+                    "selected": False,
+                    "icon": None,
+                    "extra": {
+                        "id": "workflow-transition-policy",
+                        "separator": None,
+                        "class": "",
                     },
-                    'submenu': None,
+                    "submenu": None,
                 })
         return results
 
@@ -560,7 +563,7 @@ class SidebarViewlet(ViewletBase):
         Should navigation be shown
         """
         return api.portal.get_registry_record(
-            name='collective.sidebar.enable_navigation',
+            name="collective.sidebar.enable_navigation",
             default=True,
         )
 
@@ -570,7 +573,7 @@ class SidebarViewlet(ViewletBase):
         Should actions be shown
         """
         return api.portal.get_registry_record(
-            name='collective.sidebar.enable_actions',
+            name="collective.sidebar.enable_actions",
             default=True,
         )
 
@@ -580,7 +583,7 @@ class SidebarViewlet(ViewletBase):
         Should manage portlets be shown
         """
         return api.portal.get_registry_record(
-            name='collective.sidebar.enable_portlets',
+            name="collective.sidebar.enable_portlets",
             default=True,
         )
 
@@ -591,7 +594,7 @@ class SidebarViewlet(ViewletBase):
         Should manage portlets be shown
         """
         return api.portal.get_registry_record(
-            name='collective.sidebar.enable_siteactions',
+            name="collective.sidebar.enable_siteactions",
             default=True,
         )
 
@@ -601,7 +604,7 @@ class SidebarViewlet(ViewletBase):
         Should manage portlets be shown
         """
         return api.portal.get_registry_record(
-            name='collective.sidebar.enable_sitelinks',
+            name="collective.sidebar.enable_sitelinks",
             default=True,
         )
 
@@ -610,21 +613,21 @@ class SidebarViewlet(ViewletBase):
         Should collapsible sections be enabled
         """
         return api.portal.get_registry_record(
-            'collective.sidebar.enable_collapse',
+            "collective.sidebar.enable_collapse",
             default=False,
         )
 
-    def get_section_state(self, section_name=''):
+    def get_section_state(self, section_name=""):
         """
         Return section 'collapsed' state
         """
         if self.cookies_enabled() and self.collapse_enabled():
-            sections = self.request.get('sections', '')
+            sections = self.request.get("sections", "")
             if sections:
-                sections = sections.split(',')
+                sections = sections.split(",")
                 if section_name in sections:
-                    return 'menu-section collapsed'
-        return 'menu-section'
+                    return "menu-section collapsed"
+        return "menu-section"
 
     def get_actions(self):
         """
@@ -634,12 +637,12 @@ class SidebarViewlet(ViewletBase):
         actions = portal.portal_actions.listFilteredActionsFor(self.context)
         buttons = list()
         if actions:
-            buttons = actions.get('object_buttons', list())
+            buttons = actions.get("object_buttons", list())
             for action in buttons:
-                if not action.get('icon', None):
-                    action.icon = self.get_icon(action.get('id', None))
-                if action.get('url', None):
-                    action.url = addTokenToUrl(action.get('url'), self.request)
+                if not action.get("icon", None):
+                    action.icon = self.get_icon(action.get("id", None))
+                if action.get("url", None):
+                    action.url = addTokenToUrl(action.get("url"), self.request)
         return buttons
 
     def get_addable_items(self):
@@ -650,7 +653,7 @@ class SidebarViewlet(ViewletBase):
         request = self.request
         factories_view = getMultiAdapter(
             (context, request),
-            name='folder_factories',
+            name="folder_factories",
         )
         include = None
         addContext = factories_view.add_context()
@@ -663,83 +666,83 @@ class SidebarViewlet(ViewletBase):
             return
         results_with_icons = []
         for result in results:
-            result['icon'] = 'menu-item-icon {0}'.format(self.get_icon('plus'))
+            result["icon"] = "menu-item-icon {0}".format(self.get_icon("plus"))
             results_with_icons.append(result)
         results = results_with_icons
         constraints = ISelectableConstrainTypes(addContext, None)
         if constraints is not None:
-            if constraints.canSetConstrainTypes() and \
-                    constraints.getDefaultAddableTypes():
-                url = '{0}/folder_constraintypes_form'.format(
+            if (
+                constraints.canSetConstrainTypes()
+                and constraints.getDefaultAddableTypes()
+            ):
+                url = "{0}/folder_constraintypes_form".format(
                     addContext.absolute_url(),
                 )
                 results.append({
-                    'title': _(u'folder_add_settings',
-                               default=u'Restrictions'),
-                    'description': _(
-                        u'title_configure_addable_content_types',
-                        default=u'Configure which content types can be '
-                                u'added here',
+                    "title": _("folder_add_settings", default="Restrictions"),
+                    "description": _(
+                        "title_configure_addable_content_types",
+                        default="Configure which content types can be added here",
                     ),
-                    'action': url,
-                    'selected': False,
-                    'icon': 'menu-item-icon {0}'.format(self.get_icon('cog')),
-                    'id': 'settings',
-                    'extra': {
-                        'id': 'plone-contentmenu-settings',
-                        'separator': None,
-                        'class': '',
+                    "action": url,
+                    "selected": False,
+                    "icon": "menu-item-icon {0}".format(self.get_icon("cog")),
+                    "id": "settings",
+                    "extra": {
+                        "id": "plone-contentmenu-settings",
+                        "separator": None,
+                        "class": "",
                     },
-                    'submenu': None,
+                    "submenu": None,
                 })
         # Also add a menu item to add items to the default page
         context_state = getMultiAdapter(
             (context, request),
-            name='plone_context_state',
+            name="plone_context_state",
         )
-        if context_state.is_structural_folder() and \
-                context_state.is_default_page() and \
-                self._contentCanBeAdded(context, request):
+        if (
+            context_state.is_structural_folder()
+            and context_state.is_default_page()
+            and self._contentCanBeAdded(context, request)
+        ):
             results.append({
-                'title': _(u'default_page_folder',
-                           default=u'Add item to default page'),
-                'description': _(
-                    u'desc_default_page_folder',
-                    default=u'If the default page is also a folder, '
-                            u'add items to it from here.',
+                "title": _("default_page_folder", default="Add item to default page"),
+                "description": _(
+                    "desc_default_page_folder",
+                    default="If the default page is also a folder, "
+                    "add items to it from here.",
                 ),
-                'action': context.absolute_url() + '/@@folder_factories',
-                'selected': False,
-                'icon': 'menu-item-icon {0}'.format(self.get_icon('cog')),
-                'id': 'special',
-                'extra': {
-                    'id': 'plone-contentmenu-add-to-default-page',
-                    'separator': None,
-                    'class': 'pat-plone-modal',
+                "action": context.absolute_url() + "/@@folder_factories",
+                "selected": False,
+                "icon": "menu-item-icon {0}".format(self.get_icon("cog")),
+                "id": "special",
+                "extra": {
+                    "id": "plone-contentmenu-add-to-default-page",
+                    "separator": None,
+                    "class": "pat-plone-modal",
                 },
-                'submenu': None,
+                "submenu": None,
             })
         return results
 
     def _get_context_state(self):
-        return getMultiAdapter((self.context, self.request),
-                               name='plone_context_state')
+        return getMultiAdapter((self.context, self.request), name="plone_context_state")
 
     def get_default_view_link(self):
         context_state = self._get_context_state()
         if context_state.is_default_page():
             parent = context_state.parent()
-            return parent.absolute_url() + '/select_default_view'
+            return parent.absolute_url() + "/select_default_view"
         else:
-            return self.context.absolute_url() + '/select_default_view'
+            return self.context.absolute_url() + "/select_default_view"
 
     def get_default_page_link(self):
         context_state = self._get_context_state()
         if context_state.is_default_page():
             parent = context_state.parent()
-            return parent.absolute_url() + '/select_default_page'
+            return parent.absolute_url() + "/select_default_page"
         else:
-            return self.context.absolute_url() + '/select_default_page'
+            return self.context.absolute_url() + "/select_default_page"
 
     def get_icon(self, icon):
         return get_icon(icon)
@@ -749,25 +752,24 @@ class SidebarViewlet(ViewletBase):
         Check if dynamic navigation is enabled
         """
         root_nav = api.portal.get_registry_record(
-            name='collective.sidebar.root_nav',
+            name="collective.sidebar.root_nav",
             default=False,
         )
         dynamic = api.portal.get_registry_record(
-            name='collective.sidebar.dynamic_navigation',
+            name="collective.sidebar.dynamic_navigation",
             default=False,
         )
 
         if root_nav:
-            return 'navigation-static'
+            return "navigation-static"
 
         if dynamic:
-            return 'navigation-dynamic'
+            return "navigation-dynamic"
         else:
-            return 'navigation-static'
+            return "navigation-static"
 
 
 class SidebarAJAX(BrowserView):
-
     def __call__(self, render):
         context = self.context
         request = self.request

@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer
-      name="collective.sidebar"
-      interface="collective.sidebar.interfaces.ICollectiveSidebarLayer"
-      />
+  <layer interface="collective.sidebar.interfaces.ICollectiveSidebarLayer"
+         name="collective.sidebar"
+  />
 </layers>

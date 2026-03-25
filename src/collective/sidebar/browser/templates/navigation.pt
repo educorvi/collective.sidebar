@@ -1,9 +1,19 @@
-<ul class="nav nav-pills flex-column mb-auto" tal:define="icons python:context.restrictedTraverse('@@iconresolver'); items view/get_items; back view/get_back; show view/get_show;" i18n:domain="collective.sidebar">
+<ul class="nav nav-pills flex-column mb-auto"
+    tal:define="
+      icons python:context.restrictedTraverse('@@iconresolver');
+      items view/get_items;
+      back view/get_back;
+      show view/get_show;
+    "
+    i18n:domain="collective.sidebar"
+>
 
   <!-- Navigational link back to the parent folder -->
 
   <li tal:condition="back">
-    <a href="${back}" class="nav-link link-back link-folder">
+    <a class="nav-link link-back link-folder"
+       href="${back}"
+    >
       <tal:icon tal:replace="structure python:icons.tag('chevron-left', tag_class='me-1')" />
       <span i18n:translate="navigation_back">Back</span>
     </a>
@@ -12,7 +22,9 @@
   <!-- Link to show current item if it's folderish -->
 
   <li tal:condition="show">
-    <a href="${show/url}" class="nav-link link-show link-item">
+    <a class="nav-link link-show link-item"
+       href="${show/url}"
+    >
       <tal:icon tal:replace="structure python:icons.tag('link', tag_class='me-1')" />
       ${show/title_cropped}
     </a>
@@ -21,7 +33,9 @@
   <!-- Actual links to items in folder -->
 
   <li tal:repeat="item items">
-    <a href="${item/url}" class="nav-link ${item/type}">
+    <a class="nav-link ${item/type}"
+       href="${item/url}"
+    >
       <tal:icon tal:replace="structure python:icons.tag('chevron-right', tag_class='me-1')" />
       ${item/title}
     </a>
