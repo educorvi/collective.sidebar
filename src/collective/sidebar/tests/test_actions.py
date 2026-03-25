@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from collective.sidebar.testing import COLLECTIVE_SIDEBAR_FUNCTIONAL_TESTING
 from plone import api

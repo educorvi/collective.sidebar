@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """All patches that should be applied to the Plone environment on startup."""
 
 import logging
@@ -12,10 +11,7 @@ MEMBER_IMAGE_QUALITY = 90
 
 def apply_portrait_patch():
     logger.info(
-        "patching portrait scale to {0} @ {1}% quality".format(
-            MEMBER_IMAGE_SCALE,
-            MEMBER_IMAGE_QUALITY,
-        ),
+        f"patching portrait scale to {MEMBER_IMAGE_SCALE} @ {MEMBER_IMAGE_QUALITY}% quality",
     )
     from Products.PlonePAS import config
 

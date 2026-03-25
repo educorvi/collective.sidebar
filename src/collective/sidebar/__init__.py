@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Init and utils."""
 
 from collective.sidebar.patches import apply_portrait_patch

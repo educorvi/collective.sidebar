@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """Setup tests for this package."""
 
 from collective.sidebar.interfaces import ICollectiveSidebarLayer
-from collective.sidebar.testing import COLLECTIVE_SIDEBAR_INTEGRATION_TESTING  # noqa
+from collective.sidebar.testing import COLLECTIVE_SIDEBAR_INTEGRATION_TESTING
 from plone.browserlayer import utils
 from Products.CMFPlone.utils import get_installer
 

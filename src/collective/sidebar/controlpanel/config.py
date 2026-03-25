@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from collective.sidebar import _
 from zope.schema.vocabulary import SimpleTerm

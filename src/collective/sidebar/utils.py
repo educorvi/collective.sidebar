@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from collective.sidebar.config import ICONS
 from plone import api
@@ -15,7 +14,7 @@ def crop(text, max_char_length):
             cleared_text = cleared_text.replace(s, " ")
         cropped_text = " ".join(
             (cleared_text[0:max_char_length].strip()).split(" ")[:-1]
-        )  # noqa
+        )
         if len(cropped_text) == 0:
             cropped_text = cleared_text[0:max_char_length].strip()
         return cropped_text + "..."
@@ -28,7 +27,7 @@ def get_user():
     """
     user = api.user.get_current()
     user_id = user.id
-    user_dir = "/users/{0}".format(user_id)
+    user_dir = f"/users/{user_id}"
     return user, user_id, user_dir
 
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from Acquisition import aq_get
 from collective.sidebar.interfaces import ICollectiveSidebarLayer
@@ -80,7 +79,7 @@ class CollectiveSidebarLayer(PloneSandboxLayer):
 
 
 class CollectiveSidebarTestingLayer(CollectiveSidebarLayer):
-    def setUpPloneSite(self, portal):  # noqa
+    def setUpPloneSite(self, portal):
         applyProfile(portal, "collective.sidebar:testing")
         portal.acl_users.userFolderAddUser(
             SITE_OWNER_NAME,
@@ -92,7 +91,7 @@ class CollectiveSidebarTestingLayer(CollectiveSidebarLayer):
 
 class CollectiveSidebarSessionLayer(CollectiveSidebarTestingLayer):
     def setUpPloneSite(self, portal):
-        super(CollectiveSidebarSessionLayer, self).setUpPloneSite(portal)
+        super().setUpPloneSite(portal)
         setup_sdm(portal)
 
 

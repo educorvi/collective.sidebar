@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from collective.sidebar import _
 from collective.sidebar.controlpanel.config import PositionVocabulary

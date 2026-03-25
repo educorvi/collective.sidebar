@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from collective.sidebar.testing import COLLECTIVE_SIDEBAR_ACCEPTANCE_TESTING  # noqa
+from collective.sidebar.testing import COLLECTIVE_SIDEBAR_ACCEPTANCE_TESTING
 from plone.app.testing import ROBOT_TEST_LEVEL
 from plone.testing import layered
 

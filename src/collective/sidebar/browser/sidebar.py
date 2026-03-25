@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+import contextlib
 
 from collective.sidebar import _
 from collective.sidebar.interfaces import INavigationEndpoint
@@ -46,13 +46,13 @@ class NavigationView(BrowserView):
         """
         Check workflow settings if item should be displayed in navigation.
         """
-        filter = api.portal.get_registry_record(
+        workflow_filter = api.portal.get_registry_record(
             name="plone.filter_on_workflow",
         )
         states = api.portal.get_registry_record(
             name="plone.workflow_states_to_show",
         )
-        if filter:
+        if workflow_filter:
             state = api.content.get_state(obj=item)
             if state not in states:
                 return True
@@ -149,15 +149,13 @@ class NavigationView(BrowserView):
             # context is an item, list parents content
             context = context.aq_parent
 
-        contents = list()
+        contents = []
 
         # Can not remember what edgecase we catch here.
-        try:
+        with contextlib.suppress(Exception):
             contents = self.getFolderContents(context)
-        except Exception:  # noqa: 902
-            pass
 
-        items = list()
+        items = []
 
         if contents:
             for item in contents:
@@ -355,13 +353,13 @@ class SidebarViewlet(ViewletBase):
         """
         Check workflow settings if item should be displayed in navigation.
         """
-        filter = api.portal.get_registry_record(
+        workflow_filter = api.portal.get_registry_record(
             name="plone.filter_on_workflow",
         )
         states = api.portal.get_registry_record(
             name="plone.workflow_states_to_show",
         )
-        if filter:
+        if workflow_filter:
             state = api.content.get_state(obj=item.getObject())
             if state not in states:
                 return True
@@ -526,7 +524,7 @@ class SidebarViewlet(ViewletBase):
                     "selected": False,
                     "icon": None,
                     "extra": {
-                        "id": "workflow-transition-{0}".format(action["id"]),
+                        "id": f"workflow-transition-{action['id']}",
                         "separator": None,
                         "class": cssClass,
                     },
@@ -635,9 +633,9 @@ class SidebarViewlet(ViewletBase):
         """
         portal = api.portal.get()
         actions = portal.portal_actions.listFilteredActionsFor(self.context)
-        buttons = list()
+        buttons = []
         if actions:
-            buttons = actions.get("object_buttons", list())
+            buttons = actions.get("object_buttons", [])
             for action in buttons:
                 if not action.get("icon", None):
                     action.icon = self.get_icon(action.get("id", None))
@@ -662,39 +660,35 @@ class SidebarViewlet(ViewletBase):
             include = constraints.getImmediatelyAddableTypes()
         try:
             results = factories_view.addable_types(include=include)
-        except:
+        except Exception:
             return
         results_with_icons = []
         for result in results:
-            result["icon"] = "menu-item-icon {0}".format(self.get_icon("plus"))
+            result["icon"] = f"menu-item-icon {self.get_icon('plus')}"
             results_with_icons.append(result)
         results = results_with_icons
         constraints = ISelectableConstrainTypes(addContext, None)
-        if constraints is not None:
-            if (
-                constraints.canSetConstrainTypes()
-                and constraints.getDefaultAddableTypes()
-            ):
-                url = "{0}/folder_constraintypes_form".format(
-                    addContext.absolute_url(),
-                )
-                results.append({
-                    "title": _("folder_add_settings", default="Restrictions"),
-                    "description": _(
-                        "title_configure_addable_content_types",
-                        default="Configure which content types can be added here",
-                    ),
-                    "action": url,
-                    "selected": False,
-                    "icon": "menu-item-icon {0}".format(self.get_icon("cog")),
-                    "id": "settings",
-                    "extra": {
-                        "id": "plone-contentmenu-settings",
-                        "separator": None,
-                        "class": "",
-                    },
-                    "submenu": None,
-                })
+        if constraints is not None and (
+            constraints.canSetConstrainTypes() and constraints.getDefaultAddableTypes()
+        ):
+            url = f"{addContext.absolute_url()}/folder_constraintypes_form"
+            results.append({
+                "title": _("folder_add_settings", default="Restrictions"),
+                "description": _(
+                    "title_configure_addable_content_types",
+                    default="Configure which content types can be added here",
+                ),
+                "action": url,
+                "selected": False,
+                "icon": f"menu-item-icon {self.get_icon('cog')}",
+                "id": "settings",
+                "extra": {
+                    "id": "plone-contentmenu-settings",
+                    "separator": None,
+                    "class": "",
+                },
+                "submenu": None,
+            })
         # Also add a menu item to add items to the default page
         context_state = getMultiAdapter(
             (context, request),
@@ -714,7 +708,7 @@ class SidebarViewlet(ViewletBase):
                 ),
                 "action": context.absolute_url() + "/@@folder_factories",
                 "selected": False,
-                "icon": "menu-item-icon {0}".format(self.get_icon("cog")),
+                "icon": f"menu-item-icon {self.get_icon('cog')}",
                 "id": "special",
                 "extra": {
                     "id": "plone-contentmenu-add-to-default-page",
