@@ -180,7 +180,9 @@ class SidebarViewlet(ViewletBase):
     index = ViewPageTemplateFile("templates/sidebar.pt")
 
     def getFolderContents(self, item):
-        contents = api.content.find(context=item, depth=1)
+        contents = api.content.find(
+            context=item, depth=1, sort_on="getObjPositionInParent"
+        )
         if contents:
             return contents
         return None
