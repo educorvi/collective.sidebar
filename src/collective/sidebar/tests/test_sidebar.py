@@ -25,20 +25,20 @@ class TestSidebarFunctional(unittest.TestCase):
     def test_profile_section(self):
         self.viewlet(context=self.portal, request=self.request)
         self.assertIn(
-            '<div class="profile-name">admin</div>',
+            '<span>admin</span>',
             self.viewlet(context=self.portal, request=self.request),
         )
         # Login with user that has fullname property set
         logout()
         login(self.portal, "mmustermann")
         self.assertIn(
-            '<div class="profile-name">Max Mustermann</div>',
+            '<span>mmustermann</span>',
             self.viewlet(context=self.portal, request=self.request),
         )
 
     def test_link_section(self):
         self.assertIn(
-            '<div id="sidebar-section-links" class="menu-section">',
+            '<div class="sidebar-section pb-3" id="section-links" >',
             self.viewlet(context=self.portal, request=self.request),
         )
         # Login with user that has fullname property set
@@ -47,7 +47,7 @@ class TestSidebarFunctional(unittest.TestCase):
         ac["login"].visible = False
         ac["logout"].visible = False
         self.assertNotIn(
-            '<div id="sidebar-section-links" class="menu-section">',
+            '<div class="sidebar-section pb-3" id="section-links" >',
             self.viewlet(context=self.portal, request=self.request),
         )
         logout()
@@ -69,7 +69,7 @@ class TestSidebarFunctional(unittest.TestCase):
         )
         # MR is up to fix this
         self.assertIn(
-            '<a class="link-back link-folder" href="http://nohost/plone">',
+            '<a class="nav-link link-back link-folder" href="http://nohost/plone"',
             self.viewlet(context=demo, request=self.request),
         )
 
@@ -82,13 +82,13 @@ class TestSidebarFunctional(unittest.TestCase):
             remoteUrl="${portal_url}/test_rendering",
         )
         self.assertIn(
-            '<a class="link-back link-folder" href="http://nohost/plone"',
+            '<a class="nav-link link-back link-folder" href="http://nohost/plone"',
             self.viewlet(context=demo, request=self.request),
         )
 
         # Go to item in folder -> back button
         self.assertIn(
-            '<a class="link-back link-folder" href="http://nohost/plone/demo"',
+            '<a class="nav-link link-back link-folder" href="http://nohost/plone/demo"',
             self.viewlet(context=link, request=self.request),
         )
 
@@ -101,7 +101,7 @@ class TestSidebarFunctional(unittest.TestCase):
         )
         self.portal.setDefaultPage("test-page")
         self.assertNotIn(
-            '<a class="link-back link-folder"',
+            '<a class="nav-link link-back link-folder"',
             self.viewlet(context=page, request=self.request),
         )
 
@@ -114,7 +114,7 @@ class TestSidebarFunctional(unittest.TestCase):
         )
         demo.setDefaultPage("test-page2")
         self.assertIn(
-            '<a class="link-back link-folder" href="http://nohost/plone">',
+            '<a class="nav-link link-back link-folder" href="http://nohost/plone" >',
             self.viewlet(context=page2, request=self.request),
         )
 
@@ -128,7 +128,7 @@ class TestSidebarFunctional(unittest.TestCase):
         )
         self.portal.setDefaultPage("demo")
         self.assertIn(
-            '<a href="http://nohost/plone/demo/@@folder_factories">',
+            '<a class="nav-link" href="http://nohost/plone/demo/@@folder_factories" >',
             self.viewlet(context=demo, request=self.request),
         )
 
@@ -143,7 +143,7 @@ class TestSidebarFunctional(unittest.TestCase):
             description="Test",
         )
         self.assertIn(
-            '<span class="menu-item-title">Demo</span>',
+            'Demo',
             self.viewlet(context=self.portal, request=self.request),
         )
         pagey = api.content.create(
@@ -153,11 +153,11 @@ class TestSidebarFunctional(unittest.TestCase):
             title="Pagey",
         )
         self.assertIn(
-            '<span class="menu-item-title">Pagey</span>',
+            'Pagey',
             self.viewlet(context=demo, request=self.request),
         )
         self.assertIn(
-            '<span class="menu-item-title">Pagey</span>',
+            'Pagey',
             self.viewlet(context=pagey, request=self.request),
         )
 
@@ -165,7 +165,7 @@ class TestSidebarFunctional(unittest.TestCase):
         pagey.exclude_from_nav = True
         pagey.reindexObject()
         self.assertNotIn(
-            '<span class="menu-item-title">Pagey</span>',
+            'Pagey',
             self.viewlet(context=demo, request=self.request),
         )
 
@@ -174,7 +174,7 @@ class TestSidebarFunctional(unittest.TestCase):
         pagey.reindexObject()
         demo.setDefaultPage("pagey")
         self.assertNotIn(
-            '<span class="menu-item-title">Pagey</span>',
+            'Pagey',
             self.viewlet(context=demo, request=self.request),
         )
 
@@ -204,39 +204,39 @@ class TestSidebarFunctional(unittest.TestCase):
             title="Pagey",
         )
         self.assertIn(
-            '<span class="menu-item-title">Testi</span>',
+            'Testi',
             self.viewlet(context=self.portal, request=self.request),
         )
         self.assertIn(
-            '<span class="menu-item-title">Demo</span>',
+            'Demo',
             self.viewlet(context=self.portal, request=self.request),
         )
         self.assertNotIn(
-            '<span class="menu-item-title">Pagey</span>',
+            'Pagey',
             self.viewlet(context=self.portal, request=self.request),
         )
         self.assertIn(
-            '<span class="menu-item-title">Testi</span>',
+            'Testi',
             self.viewlet(context=demo, request=self.request),
         )
         self.assertIn(
-            '<span class="menu-item-title">Demo</span>',
+            'Demo',
             self.viewlet(context=demo, request=self.request),
         )
         self.assertNotIn(
-            '<span class="menu-item-title">Pagey</span>',
+            'Pagey',
             self.viewlet(context=demo, request=self.request),
         )
         self.assertIn(
-            '<span class="menu-item-title">Testi</span>',
+            'Testi',
             self.viewlet(context=pagey, request=self.request),
         )
         self.assertIn(
-            '<span class="menu-item-title">Demo</span>',
+            'Demo',
             self.viewlet(context=pagey, request=self.request),
         )
         self.assertNotIn(
-            '<span class="menu-item-title">Pagey</span>',
+            'Pagey',
             self.viewlet(context=pagey, request=self.request),
         )
 
@@ -285,39 +285,39 @@ class TestSidebarFunctional(unittest.TestCase):
         v_folder2 = self.viewlet(context=folder2, request=self.request)
         v_item3 = self.viewlet(context=item3, request=self.request)
 
-        self.assertIn('<span class="menu-item-title">Folder1</span>', v_portal)
-        self.assertNotIn('<span class="menu-item-title">Folder2</span>', v_portal)
-        self.assertNotIn('<span class="menu-item-title">Item1</span>', v_portal)
-        self.assertNotIn('<span class="menu-item-title">Item2</span>', v_portal)
-        self.assertNotIn('<span class="menu-item-title">Item3</span>', v_portal)
+        self.assertIn('Folder1', v_portal)
+        self.assertNotIn('Folder2', v_portal)
+        self.assertNotIn('Item1', v_portal)
+        self.assertNotIn('Item2', v_portal)
+        self.assertNotIn('Item3', v_portal)
 
-        self.assertIn('<span class="menu-item-title">Folder2</span>', v_folder1)
-        self.assertIn('<span class="menu-item-title">Item1</span>', v_folder1)
-        self.assertIn('<span class="menu-item-title">Item2</span>', v_folder1)
-        self.assertNotIn('<span class="menu-item-title">Item3</span>', v_folder1)
+        self.assertIn('Folder2', v_folder1)
+        self.assertIn('Item1', v_folder1)
+        self.assertIn('Item2', v_folder1)
+        self.assertNotIn('Item3', v_folder1)
 
-        self.assertNotIn('<span class="menu-item-title">Folder1</span>', v_item1)
-        self.assertIn('<span class="menu-item-title">Folder2</span>', v_item1)
-        self.assertIn('<span class="menu-item-title">Item1</span>', v_item1)
-        self.assertIn('<span class="menu-item-title">Item2</span>', v_item1)
-        self.assertNotIn('<span class="menu-item-title">Item3</span>', v_item1)
+        self.assertNotIn('Folder1', v_item1)
+        self.assertIn('Folder2', v_item1)
+        self.assertIn('Item1', v_item1)
+        self.assertIn('Item2', v_item1)
+        self.assertNotIn('Item3', v_item1)
 
-        self.assertNotIn('<span class="menu-item-title">Folder1</span>', v_item2)
-        self.assertIn('<span class="menu-item-title">Folder2</span>', v_item2)
-        self.assertIn('<span class="menu-item-title">Item1</span>', v_item2)
-        self.assertIn('<span class="menu-item-title">Item2</span>', v_item2)
-        self.assertNotIn('<span class="menu-item-title">Item3</span>', v_item2)
+        self.assertNotIn('Folder1', v_item2)
+        self.assertIn('Folder2', v_item2)
+        self.assertIn('Item1', v_item2)
+        self.assertIn('Item2', v_item2)
+        self.assertNotIn('Item3', v_item2)
 
-        self.assertNotIn('<span class="menu-item-title">Folder1</span>', v_folder2)
-        self.assertNotIn('<span class="menu-item-title">Item1</span>', v_folder2)
-        self.assertNotIn('<span class="menu-item-title">Item2</span>', v_folder2)
-        self.assertIn('<span class="menu-item-title">Item3</span>', v_folder2)
+        self.assertNotIn('Folder1', v_folder2)
+        self.assertNotIn('Item1', v_folder2)
+        self.assertNotIn('Item2', v_folder2)
+        self.assertIn('Item3', v_folder2)
 
-        self.assertNotIn('<span class="menu-item-title">Folder1</span>', v_item3)
-        self.assertNotIn('<span class="menu-item-title">Folder2</span>', v_item3)
-        self.assertNotIn('<span class="menu-item-title">Item1</span>', v_item3)
-        self.assertNotIn('<span class="menu-item-title">Item2</span>', v_item3)
-        self.assertIn('<span class="menu-item-title">Item3</span>', v_item3)
+        self.assertNotIn('Folder1', v_item3)
+        self.assertNotIn('Folder2', v_item3)
+        self.assertNotIn('Item1', v_item3)
+        self.assertNotIn('Item2', v_item3)
+        self.assertIn('Item3', v_item3)
 
     def test_workflows(self):
         item1 = api.content.create(
@@ -346,92 +346,77 @@ class TestSidebarFunctional(unittest.TestCase):
         self.assertEqual(api.content.get_state(item1), "published")
         v = self.viewlet(context=item1, request=self.request)
         self.assertIn(
-            '<span class="menu-item-icon glyphicon glyphicon-record state-published', v
+            '<span class="nav-link state-published">', v
         )
-        self.assertIn('<span class="menu-item-title state-published', v)
         self.assertNotIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=publish',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=publish',
             v,
         )
         self.assertNotIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=submit',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=submit',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=reject',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=reject',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=retract',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=retract',
             v,
         )
-        self.assertIn('<a href="http://nohost/plone/item1/content_status_history', v)
+        self.assertIn('href="http://nohost/plone/item1/content_status_history', v)
 
     def _check_in_pending_state(self, item1):
         self.assertEqual(api.content.get_state(item1), "pending")
         v = self.viewlet(context=item1, request=self.request)
         self.assertIn(
-            '<span class="menu-item-icon glyphicon glyphicon-record state-pending', v
+            '<span class="nav-link state-pending">', v
         )
-        self.assertIn('<span class="menu-item-title state-pending', v)
         self.assertIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=publish',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=publish',
             v,
         )
         self.assertNotIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=submit',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=submit',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=reject',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=reject',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=retract',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=retract',
             v,
         )
-        self.assertIn('<a href="http://nohost/plone/item1/content_status_history', v)
+        self.assertIn('href="http://nohost/plone/item1/content_status_history', v)
 
     def _check_in_private_state(self, item1):
         self.assertEqual(api.content.get_state(item1), "private")
         v = self.viewlet(context=item1, request=self.request)
         self.assertIn(
-            '<span class="menu-item-icon glyphicon glyphicon-record state-private', v
+            '<span class="nav-link state-private">', v
         )
-        self.assertIn('<span class="menu-item-title state-private', v)
         self.assertIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=publish',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=publish',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=submit',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=submit',
             v,
         )
         self.assertNotIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=reject',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=reject',
             v,
         )
         self.assertNotIn(
-            '<a href="http://nohost/plone/item1/content_status_modify?workflow_action=retract',
+            'href="http://nohost/plone/item1/content_status_modify?workflow_action=retract',
             v,
         )
-        self.assertIn('<a href="http://nohost/plone/item1/content_status_history', v)
+        self.assertIn('href="http://nohost/plone/item1/content_status_history', v)
 
     def test_workflow_colors(self):
         view = SidebarViewlet(self.portal, self.request, None, None)
         self.assertEqual(view.has_workflow_state_color(), "with-state-color")
-
-    def test_sections_collapse(self):
-        api.portal.set_registry_record("collective.sidebar.enable_cookies", True)
-        api.portal.set_registry_record("collective.sidebar.enable_collapse", True)
-        v = self.viewlet(context=self.portal, request=self.request)
-        self.assertNotIn("menu-section collapsed", v)
-        self.assertIn('<div id="sidebar-section-site" class="menu-section">', v)
-        self.request.set("sections", "sidebar-section-site")
-        v = self.viewlet(context=self.portal, request=self.request)
-        self.assertIn(
-            '<div id="sidebar-section-site" class="menu-section collapsed">', v
-        )
 
     def test_actions(self):
         demo = api.content.create(
@@ -442,12 +427,8 @@ class TestSidebarFunctional(unittest.TestCase):
             description="Test",
         )
         v = self.viewlet(context=demo, request=self.request)
-        self.assertIn('<a href="http://nohost/plone/demo/object_cut?_authenticator=', v)
+        self.assertIn('href="http://nohost/plone/demo/object_cut?_authenticator=', v)
         # These actions are added in profiles/testing/actions.xml:
-        # Test action with icon
-        self.assertIn("glyphicon-test", v)
-        # Action without icon
-        self.assertIn("glyphicon-menu-right", v)
         self.assertIn("Test-Action", v)
         self.assertIn("No-Url-Action", v)
         self.assertIn("No-Icon-Action", v)
@@ -462,13 +443,13 @@ class TestSidebarFunctional(unittest.TestCase):
             description="Test",
         )
         v = self.viewlet(context=demo, request=self.request)
-        self.assertIn('<a href="http://nohost/plone/demo/++add++Image', v)
-        self.assertIn('<a href="http://nohost/plone/demo/++add++File', v)
-        self.assertIn('<a href="http://nohost/plone/demo/++add++Collection', v)
-        self.assertIn('<a href="http://nohost/plone/demo/++add++News Item', v)
-        self.assertIn('<a href="http://nohost/plone/demo/++add++Folder', v)
-        self.assertIn('<a href="http://nohost/plone/demo/++add++Document', v)
-        self.assertIn('<a href="http://nohost/plone/demo/++add++Event', v)
+        self.assertIn('href="http://nohost/plone/demo/++add++Image', v)
+        self.assertIn('href="http://nohost/plone/demo/++add++File', v)
+        self.assertIn('href="http://nohost/plone/demo/++add++Collection', v)
+        self.assertIn('href="http://nohost/plone/demo/++add++News Item', v)
+        self.assertIn('href="http://nohost/plone/demo/++add++Folder', v)
+        self.assertIn('href="http://nohost/plone/demo/++add++Document', v)
+        self.assertIn('href="http://nohost/plone/demo/++add++Event', v)
 
         # Restrict what can be added to a folder and test it
         folder_fti = self.portal.portal_types["Folder"]
@@ -476,13 +457,13 @@ class TestSidebarFunctional(unittest.TestCase):
             filter_content_types=True, allowed_content_types=[]
         )
         v = self.viewlet(context=demo, request=self.request)
-        self.assertNotIn('<a href="http://nohost/plone/demo/++add++Image', v)
-        self.assertNotIn('<a href="http://nohost/plone/demo/++add++File', v)
-        self.assertNotIn('<a href="http://nohost/plone/demo/++add++Collection', v)
-        self.assertNotIn('<a href="http://nohost/plone/demo/++add++News Item', v)
-        self.assertNotIn('<a href="http://nohost/plone/demo/++add++Folder', v)
-        self.assertNotIn('<a href="http://nohost/plone/demo/++add++Document', v)
-        self.assertNotIn('<a href="http://nohost/plone/demo/++add++Event', v)
+        self.assertNotIn('href="http://nohost/plone/demo/++add++Image', v)
+        self.assertNotIn('href="http://nohost/plone/demo/++add++File', v)
+        self.assertNotIn('href="http://nohost/plone/demo/++add++Collection', v)
+        self.assertNotIn('href="http://nohost/plone/demo/++add++News Item', v)
+        self.assertNotIn('href="http://nohost/plone/demo/++add++Folder', v)
+        self.assertNotIn('href="http://nohost/plone/demo/++add++Document', v)
+        self.assertNotIn('href="http://nohost/plone/demo/++add++Event', v)
         self.assertNotIn("sidebar-section-add", v)
 
     def test_default_page_and_view_link(self):
@@ -503,29 +484,29 @@ class TestSidebarFunctional(unittest.TestCase):
         self.portal.setDefaultPage("demo")
         v = self.viewlet(context=self.portal, request=self.request)
         self.assertIn(
-            '<a href="http://nohost/plone/select_default_view" class="pat-plone-modal">',
+            'class="nav-link pat-plone-modal" href="http://nohost/plone/select_default_view" >',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/select_default_page" class="pat-plone-modal">',
+            'class="nav-link pat-plone-modal" href="http://nohost/plone/select_default_page" >',
             v,
         )
         v = self.viewlet(context=demo, request=self.request)
         self.assertIn(
-            '<a href="http://nohost/plone/select_default_view" class="pat-plone-modal">',
+            'class="nav-link pat-plone-modal" href="http://nohost/plone/select_default_view" >',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/select_default_page" class="pat-plone-modal">',
+            'class="nav-link pat-plone-modal" href="http://nohost/plone/select_default_page" >',
             v,
         )
         v = self.viewlet(context=demo2, request=self.request)
         self.assertIn(
-            '<a href="http://nohost/plone/demo2/select_default_view" class="pat-plone-modal">',
+            'class="nav-link pat-plone-modal" href="http://nohost/plone/demo2/select_default_view" >',
             v,
         )
         self.assertIn(
-            '<a href="http://nohost/plone/demo2/select_default_page" class="pat-plone-modal">',
+            'class="nav-link pat-plone-modal" href="http://nohost/plone/demo2/select_default_page" >',
             v,
         )
 

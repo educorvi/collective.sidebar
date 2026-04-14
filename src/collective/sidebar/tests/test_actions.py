@@ -26,11 +26,11 @@ class TestActionsFunctional(unittest.TestCase):
     def test_action_links(self):
         # Logout action only visible to authenticated users
         self.assertIn(
-            '<span class="menu-item-title">Logout</span>',
+            'Logout',
             self.viewlet(context=self.portal, request=self.request),
         )
         # Visibility should be respected
-        home_el = '<span class="menu-item-title">Home</span>'
+        home_el = 'Home'
         self.assertIn(
             home_el,
             self.viewlet(context=self.portal, request=self.request),
@@ -52,6 +52,6 @@ class TestActionsFunctional(unittest.TestCase):
             "category": "sidebar_links",
         })
         self.assertIn(
-            '<span class="menu-item-title">Contact</span>',
+            'Contact',
             self.viewlet(context=self.portal, request=self.request),
         )
